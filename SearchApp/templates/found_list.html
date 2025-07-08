@@ -1,0 +1,33 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="text-center text-light">All Found Items</h2>
+  <div class="row">
+    {% for item in items %}
+      <div class="col-md-4">
+        <div class="card mb-3">
+          {% if item.image %}
+            <img src="{{ item.image.url }}" class="card-img-top" alt="Item Image" style="height: 200px; ">
+          {% else %}
+            <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="Default Image">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ item.item_name }}</h5>
+            <p>{{ item.description }}</p>
+            <p><strong>Found At:</strong> {{ item.found_location }}</p>
+            <p><strong>Date:</strong> {{ item.found_date }}</p>
+            <p><strong>Reported By:</strong> {{ item.reported_by.username }}</p>
+            <a class="btn btn-success" href="{% url 'update_found' item.id %}">Update</a>
+            <a class="btn btn-danger" href="{% url 'delete_found' item.id %}">Delete</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-light">No found items reported yet.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

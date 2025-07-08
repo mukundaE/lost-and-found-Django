@@ -1,0 +1,73 @@
+  {% load static %}
+  
+  <nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container-fluid">
+      <!-- Leftmost: Logo and Title -->
+      <div class="d-flex align-items-center">
+        <img src="{% static 'images/search.jpg' %}" alt="Logo" width="50" height="40" class="me-2">
+        <span class="navbar-brand mb-0 h1">SEARCH.COM</span>
+      </div>
+      
+  
+      <!-- Rightmost: Menu Items -->
+      <div>
+        <ul class="navbar-nav">
+  
+        <!--<ul class="navbar-nav"> --> 
+          <!-- Always visible -->
+          <li class="nav-item">
+            <a class="nav-link active mx-4" aria-current="page" href="{% url 'home' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active mx-4" href="{% url 'contact' %}">Contact Us</a>
+          </li>
+         
+          <div class="nav-item dropdown mx-4">
+            <a class="nav-link dropdown-toggle active" href="#" id="reportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Report
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="reportDropdown">
+              <li><a class="dropdown-item" href="{% url 'reportlost' %}">Report Lost</a></li>
+              <li><a class="dropdown-item" href="{% url 'reportfound' %}">Report Found</a></li>
+            </ul>
+          </div>
+         
+          <li class="nav-item mx-4">
+              <a class="nav-link active" href="{% url 'lost_list' %}">Lost</a>
+          </li>
+         
+          <li class="nav-item">
+              <a class="nav-link active mx-4" href="{% url 'found_list' %}">Found</a>
+          </li>
+          {% if user.is_authenticated and user.is_staff %}
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'claimdashboard' %}">Claim</a>
+          </li> 
+         {% endif %}
+         <li class="nav-item">
+          <a class="btn btn-dark nav-link active mx-4" href="{% url 'login' %}">Login</a>
+         </li>
+      
+          <li class="nav-item">
+              <a class="btn btn-dark nav-link active mx-4" href="{% url 'log_out' %}">Logout</a>
+          </li>
+        
+       </ul>
+      </div>
+    </div>
+  </nav>
+  
+  
+  <div class="container mt-4 text-light">
+    {% if user.is_authenticated %}
+      <p>Welcome, {{ user.username }}!</p>
+      {% if user.is_staff %}
+        <p>You are staff</p>
+      {% endif %}
+      {% if user.is_superuser %}
+        <p>You are superuser</p>
+      {% endif %}
+    {% endif %}
+  </div>
+  
+  

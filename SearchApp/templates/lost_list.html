@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-light mb-4">All Lost Items</h2>
+    <div class="row">
+        {% for item in items %}
+          <div class="col-md-4">
+            <div class="card mb-3">
+              {% if item.image %}
+                <img src="{{ item.image.url }}" class="card-img-top" alt="Item Image" style="height: 200px; ">
+              {% else %}
+                <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="Default Image">
+              {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.item_name }}</h5>
+                    <p class="card-text">{{ item.description }}</p>
+                    <p><strong>Lost At:</strong> {{ item.location }}</p>
+                    <p><strong>Date:</strong> {{ item.date_lost }}</p>
+                    <p><strong>Reported By:</strong> {{ item.user.username }}</p>
+                    <a class="btn btn-success" href="{% url 'update_lost' item.id %}">Update</a>
+                    <a class="btn btn-danger" href="{% url 'delete_lost' item.id %}">Delete</a>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
